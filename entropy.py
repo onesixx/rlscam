@@ -2,19 +2,34 @@ import numpy as np
 import plotly.graph_objs as go
 
 def entropy(x):
-    return -np.sum(x * np.log2(x))
+    return -x * np.log(x)
 
-x = np.arange(0.1, 10,.3)
-   #np.linspace(-5.0, 5.0, 100)
-
+x = np.linspace(0, 1.0, 50)
 y = entropy(x)
 
 fig= go.Figure() # trace, layout
 fig.add_trace(
-    go.Scatter(x=x, y=y, mode='lines+markers',
-               line=dict(color='blue'),
-               marker=dict(size=4, color='red')))
+    go.Scatter(
+        x=x, y=y, mode='lines+markers',
+        line=dict(color='blue'),
+        marker=dict(size=4, color='red')
+    ))
 fig.update_layout(
-    title = f"{entropy.__name__} Plot", 
-    #yaxis_range=[-0.1, 1.1] # y축의 범위 지정
+   title = f"{entropy.__name__} Plot"
 )
+fig.show()
+
+## plot
+trace = go.Scatter(
+    x=x, y=y, mode='lines+markers',
+    line=dict(color='blue'),
+    marker=dict(size=4, color='red')
+)
+layout = go.Layout(
+   title = f"{entropy.__name__} Plot", 
+    xaxis=dict(range=[0, 1], scaleanchor='x', scaleratio=1, title='x'),
+    yaxis=dict(range=[0, 1]),
+    width=500
+)
+fig = go.Figure( data=[trace], layout=layout)
+fig.show()
